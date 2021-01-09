@@ -6,3 +6,4 @@
     - pretasks
     - postgresdb
     - virtualenv
+    - django
