@@ -1,7 +1,7 @@
 ---
 - name: Ensure we have access from the new user
   postgresql_privs:
-    db: cellbasedev
-    role: djangodevuser
+    db: myproject
+    role: myprojectuser
     objs: ALL_IN_SCHEMA
     privs: SELECT,INSERT,UPDATE,DELETE
