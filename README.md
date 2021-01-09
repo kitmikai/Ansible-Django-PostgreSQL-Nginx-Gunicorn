@@ -12,7 +12,7 @@
 * CREATE USER myprojectuser WITH PASSWORD 'password';
 * ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
 * ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
-* ALTER ROLE myprojectuser SET timezone TO 'UTC';
+* ALTER ROLE myprojectuser SET timezone TO 'Africa/Nairobi';
 * GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 * \q
 
