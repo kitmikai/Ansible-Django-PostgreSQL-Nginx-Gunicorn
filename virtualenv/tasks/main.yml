@@ -6,3 +6,20 @@
 
 - name: Create a project directory
   stat: path=/home/vagrant/.projectdir
+
+- name: Create a Python virtual environment
+  command: >
+          chdir=/home/vagrant/projectdir/
+          virtualenv projectenv
+
+- name: Activate the virtual environment
+  command: >
+          chdir=/home/vagrant/projectdir/
+          source ./projectenv/bin/activate
+      
+- name: Install Django, Gunicorn, and PostgreSQL
+  pip:
+    name:
+          - django
+          - gunicorn
+          - psycopg2-binary
