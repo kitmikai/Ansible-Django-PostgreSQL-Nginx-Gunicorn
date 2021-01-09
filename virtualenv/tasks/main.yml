@@ -1,0 +1,8 @@
+---
+- name: Install virtualenv using pip3
+  pip:
+    name: virtualenv
+    state: present
+
+- name: Create a project directory
+  stat: path=/home/vagrant/.projectdir
