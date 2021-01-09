@@ -1,0 +1,19 @@
+---
+- name: Create and Configure a Django project
+  command: > 
+          chdir=/home/vagrant/projectdir/
+          django-admin.py startproject testproject .
+
+- name: Adjust the ALLOWED_HOSTS project settings
+  replace:
+    path: /home/vagrant/projectdir/testproject/settings.py
+    regexp: 'ALLOWED_HOSTS = []'
+    replace: 'ALLOWED_HOSTS = [ "*", "localhost", "192.168.60.4" ]'
+
+- name: Edit Database settings
+  replace:
+    path: /home/vagrant/projectdir/testproject/settings.py
+    regexp: 
+    
+- name: Add static directory
+  
