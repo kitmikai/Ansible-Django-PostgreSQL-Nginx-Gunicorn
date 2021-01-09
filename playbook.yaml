@@ -1,0 +1,8 @@
+---
+- name: Setting up devserver
+  hosts: devserver
+  become: yes
+  roles:
+    - pretasks
+    - postgresdb
+    - virtualenv
