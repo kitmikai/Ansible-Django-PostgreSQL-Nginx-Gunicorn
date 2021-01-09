@@ -1,0 +1,81 @@
+---
+- name: Update apt cache if needed
+  apt: "update_cache=yes cache_valid_time=14400"
+
+- name: Upgrade all apt packages
+  apt: upgrade=dist force_apt_get=yes
+
+- name: Ensure bash, OpenSSL, and libssl are the latest versions
+  apt: 
+        state: latest
+        update_cache: yes
+        name: 
+              - bash
+              - openssl
+              - libssl-dev 
+              - libssl-doc 
+  
+- name: Install Python 3, Postgresql, and NGINX
+  apt: 
+        state: present
+        update_cache: yes
+        name:
+              - python3-pip
+              - python3-dev
+              - libpq-dev
+              - postgresql
+              - postgresql-contrib
+              - python3-psycopg2
+              - nginx
+              - curl
+
+- name: Check if a reboot is needed 
+  register: reboot_required_file
+  stat: path=/var/run/reboot-required get_md5=no
+
+- name: Reboot the box if kernel is updated
+  reboot:
+    msg: "Reboot initiated by Ansible for kernel updates"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: reboot_required_file.stat.exists
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+
+- name: Allow access to SSH
+  community.general.ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Allow access to django development port 8000
+  community.general.ufw:
+    rule: allow
+    port: '8000'
+    proto: tcp
+
+- name: Restart firewall
+  service:
+    name: ufw
+    state: restarted
+
+- name: Ensure the PostgreSQL service is running
+  service: name=postgresql state=started enabled=yes
+
+- name: Copy PostgreSQL client authentication config file
+  copy:
+    src: pg_hba.conf
+    dest: /etc/postgresql/12/main/pg_hba.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart PostgreSQL
+  service:
+    name: postgresql
+    state: restarted
