@@ -13,9 +13,8 @@
           virtualenv projectenv
 
 - name: Activate the virtual environment
-  command: >
-          chdir=/home/vagrant/projectdir/
-          source ./projectenv/bin/activate
+  become: yes
+  shell: sudo -iu vagrant source /home/vagrant/projectdir/general_venv/bin/activate
       
 - name: Install Django, Gunicorn, and PostgreSQL
   pip:
