@@ -14,7 +14,7 @@
   replace:
     path: /home/vagrant/projectdir/testproject/settings.py
     regexp: '(\s+)ALLOWED_HOSTS(\s+.*)?$'
-    replace: '\nALLOWED_HOSTS = [ "*", "localhost", "192.168.60.4" ]'
+    replace: 'ALLOWED_HOSTS = [ "*", "localhost", "192.168.60.4" ]'
     backup: yes 
     
 - name: Add static directory setting
@@ -24,4 +24,23 @@
     regexp: '^STATIC_ROOT '
     insertafter: '^STATIC_URL '
     line: 'STATIC_ROOT =  BASE_DIR / "static"'
+
+- name: Activate the virtual environment
+  become: yes
+  shell: sudo -iu vagrant source /home/vagrant/projectdir/general_venv/bin/activate
+
+- name: Migrate initial database schema to PostgreSQL
+  django_manage: app_path=/home/vagrant/projectdir
+                command=makemigrations
+                virtualenv=/home/vagrant/projectdir/general_venv
+
+- name: Migrate initial database schema to PostgreSQL
+  django_manage: app_path=/home/vagrant/projectdir
+                command=migrate
+                virtualenv=/home/vagrant/projectdir/general_venv
+
+- name: Collect static content
+  django_manage: app_path=/home/vagrant/projectdir
+                command=collectstatic
+                virtualenv=/home/vagrant/projectdir/general_venv
   
