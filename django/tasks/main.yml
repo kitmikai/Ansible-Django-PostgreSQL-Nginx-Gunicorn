@@ -1,14 +1,20 @@
 ---
+- name: Check if Django project directory exists
+  stat:
+    path: /home/vagrant/projectdir/static/
+  register: stat_result
+
 - name: Create and Configure a Django project
   command: > 
           chdir=/home/vagrant/projectdir/
           django-admin.py startproject testproject .
+  when: not stat_result.stat.exists
 
 - name: Adjust the ALLOWED_HOSTS project settings
   replace:
     path: /home/vagrant/projectdir/testproject/settings.py
-    regexp: 'ALLOWED_HOSTS = []'
-    replace: 'ALLOWED_HOSTS = [ "*", "localhost", "192.168.60.4" ]'
+    regexp: '(\s+)ALLOWED_HOSTS(\s+.*)?$'
+    replace: '\nALLOWED_HOSTS = [ "*", "localhost", "192.168.60.4" ]'
     backup: yes 
     
 - name: Add static directory setting
