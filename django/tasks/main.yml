@@ -9,11 +9,13 @@
     path: /home/vagrant/projectdir/testproject/settings.py
     regexp: 'ALLOWED_HOSTS = []'
     replace: 'ALLOWED_HOSTS = [ "*", "localhost", "192.168.60.4" ]'
-
-- name: Edit Database settings
-  replace:
-    path: /home/vagrant/projectdir/testproject/settings.py
-    regexp: 
+    backup: yes 
     
-- name: Add static directory
+- name: Add static directory setting
+  lineinfile:
+    path: /home/vagrant/projectdir/testproject/settings.py
+    backup: yes
+    regexp: '^STATIC_ROOT '
+    insertafter: '^STATIC_URL '
+    line: 'STATIC_ROOT =  BASE_DIR / "static"'
   
