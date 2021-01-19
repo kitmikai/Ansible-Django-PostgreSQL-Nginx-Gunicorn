@@ -14,7 +14,7 @@
               - openssl
               - libssl-dev 
               - libssl-doc 
-  
+
 - name: Install Python 3, Postgresql, and NGINX
   apt: 
         state: present
