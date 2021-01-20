@@ -1,5 +1,5 @@
 # Ansible-Django-PostgreSQL-Nginx-Gunicorn
-Installs and configures Django, Gunicorn and PostgreSQL server on Ubuntu. Based on the [**tutorial**](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-20-04)
+Installs and configures Django, ,Nginx, Gunicorn and PostgreSQL server on Ubuntu. Based on this [**tutorial**](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-20-04) by [**Erin Glass**](https://www.linkedin.com/in/erinroseglass/)
 
 # Installation 
 * Clone the repository
